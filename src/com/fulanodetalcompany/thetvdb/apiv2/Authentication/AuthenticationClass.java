@@ -26,7 +26,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- *
+ *A class to handle the Authentication Process
+ * 
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  */
@@ -36,8 +37,8 @@ public class AuthenticationClass extends RequestErrorHandler<AuthenticationToken
     Authentication authentication;
 
     /**
-     *
-     * @param base_url
+     * Constructor with the base url for the api
+     * @param base_url the url of the api
      */
     public AuthenticationClass(String base_url) {
         this.retrofit = new Retrofit.Builder()
@@ -46,7 +47,16 @@ public class AuthenticationClass extends RequestErrorHandler<AuthenticationToken
                 .build();
         this.authentication = retrofit.create(Authentication.class);
     }
-
+    
+    /**
+     * Get an authentication token string
+     * @param apikey the api key
+     * @param userkey the user key
+     * @param username the user name
+     * @return a token string
+     * @throws IOException If there is a runtime error
+     * @throws UnauthenticatedException If the credentials are not correct
+     */
     public String getToken(String apikey, String userkey, String username) throws IOException, UnauthenticatedException {
         return getToken(
                 new AuthenticationRequest(
@@ -54,7 +64,14 @@ public class AuthenticationClass extends RequestErrorHandler<AuthenticationToken
                         userkey,
                         username));
     }
-
+    
+    /**
+     * Get an authentication token string
+     * @param auth_request a object with the credentials
+     * @return a token string
+     * @throws IOException If there is a runtime error
+     * @throws UnauthenticatedException If the credentials are not correct
+     */
     public String getToken(AuthenticationRequest auth_request) throws IOException, UnauthenticatedException {
         Response<AuthenticationToken> execute;
         execute = this.authentication
@@ -69,12 +86,26 @@ public class AuthenticationClass extends RequestErrorHandler<AuthenticationToken
         return null;
     }
     
+    /**
+     * Get a new token before the actual expire
+     * @param token the actual token
+     * @return a token string
+     * @throws IOException If the is a runtime error
+     * @throws UnauthenticatedException If the actual token has expire
+     */
     public String refreshToken(String token) throws IOException, UnauthenticatedException{
         return refreshToken(
                 new AuthenticationToken(
                         token));
     }
     
+    /**
+     * Get a new token before the actual expire
+     * @param token the actual token
+     * @return a token string
+     * @throws IOException If the is a runtime error
+     * @throws UnauthenticatedException If the actual token has expire
+     */
     public String refreshToken(AuthenticationToken token) throws IOException, UnauthenticatedException{
         Response<AuthenticationToken> execute;
         execute = this.authentication

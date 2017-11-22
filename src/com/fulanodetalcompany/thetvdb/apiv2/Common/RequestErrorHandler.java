@@ -20,39 +20,51 @@ import com.google.gson.JsonParser;
 import retrofit2.Response;
 
 /**
+ * A generic class to handle with the error of the restful api
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  * @param <T>
  */
 public class RequestErrorHandler<T> {
-    JsonParser parser = new JsonParser();
-    
+
     /**
-     *
-     * @param response
-     * @return
+     * GSON free parser for the error message
      */
-    private int getErrorCode (Response<T> response){
+    JsonParser parser = new JsonParser();
+
+    /**
+     * Get the http code error
+     * @param response the http request object
+     * @return the code as Integer
+     */
+    private int getErrorCode(Response<T> response) {
         return response.code();
     }
     
-    public void HandleError(Response<T> response) throws UnauthenticatedException{
-        switch(getErrorCode(response)){
+    /**
+     * Return an exception of the code fit in one the cases
+     * @param response the http request object
+     * @throws UnauthenticatedException If the request haven´t authentication
+     * credentials
+     */
+    public void HandleError(Response<T> response) throws UnauthenticatedException {
+        switch (getErrorCode(response)) {
             case 401:
-                 throw new UnauthenticatedException(response.message());
-
+                throw new UnauthenticatedException(decodeErrorMesage(response));
         }
-        
-    }
-    
 
-    
-    private String decodeErrorMesage(Response<T> response){
+    }
+    /**
+     * Return the error message of the response
+     * @param response the http request
+     * @return the message
+     */
+    private String decodeErrorMesage(Response<T> response) {
         JsonObject error_message;
         error_message = parser.parse(response.errorBody().toString())
                 .getAsJsonObject();
-        
+
         return error_message.get("message").getAsString();
     }
-    
+
 }

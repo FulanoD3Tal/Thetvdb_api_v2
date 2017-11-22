@@ -13,48 +13,51 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fulanodetalcompany.gson.models.Authentication;
+package com.fulanodetalcompany.gson.models.Common;
+
+import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 /**
- * This represent the http response from an AuthenticationRquest<br>
- * the only element that contains is the response as a token than<br>
- * can be use to all other operations in the api
+ * Generic object to encapsule response in the next form<br>
+ * <pre>
+ * {@code
+ * 
+ *  {
+ *      data:[
+ *          object:{
+ *                  key : value,
+ *                  ...
+ *              }
+ *          ]
+ * }
+ * 
+ * }
+ * </pre>
+ * 
+ * where the value of data is a list of models with the info
  * 
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
+ * @param <T>
  */
-public class AuthenticationToken {
-    
-    String token;
+public class ResultDataList<T> {
+    @SerializedName("data")
+    private List<T> results;
 
     /**
-     *
+     * @return the results
      */
-    public AuthenticationToken() {
+    public List<T> getResults() {
+        return results;
     }
+
     /**
-     * Create an instante of the object
-     * 
-     * @param token 
+     * @param results the results to set
      */
-    public AuthenticationToken(String token) {
-        this.token = token;
+    public void setResults(List<T> results) {
+        this.results = results;
     }
-    /**
-     * get the token
-     * @return 
-     */
-    public String getToken() {
-        return token;
-    }
-    /**
-     * set token
-     * @param token 
-     */
-    public void setToken(String token) {
-        this.token = token;
-    }
-    
     
     
 }
