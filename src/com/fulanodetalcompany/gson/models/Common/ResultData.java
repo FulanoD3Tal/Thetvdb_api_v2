@@ -21,7 +21,7 @@ import com.google.gson.annotations.SerializedName;
  * Generic object to encapsule response in the next form<br>
  * <pre>
  * {@code
- * 
+ *
  *  {
  *      data:
  *          object:{
@@ -29,17 +29,18 @@ import com.google.gson.annotations.SerializedName;
  *                  ...
  *              }
  * }
- * 
+ *
  * }
  * </pre>
- * 
+ *
  * where object is the model with the info
- * 
+ *
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  * @param <T>
  */
 public class ResultData<T> {
+
     @SerializedName("data")
     private T result;
 

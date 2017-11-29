@@ -19,12 +19,12 @@ package com.fulanodetalcompany.gson.models.Authentication;
  * This represent the http response from an AuthenticationRquest<br>
  * the only element that contains is the response as a token than<br>
  * can be use to all other operations in the api
- * 
+ *
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  */
 public class AuthenticationToken {
-    
+
     String token;
 
     /**
@@ -32,29 +32,32 @@ public class AuthenticationToken {
      */
     public AuthenticationToken() {
     }
+
     /**
      * Create an instante of the object
-     * 
-     * @param token 
+     *
+     * @param token
      */
     public AuthenticationToken(String token) {
         this.token = token;
     }
+
     /**
      * get the token
-     * @return 
+     *
+     * @return
      */
     public String getToken() {
         return token;
     }
+
     /**
      * set token
-     * @param token 
+     *
+     * @param token
      */
     public void setToken(String token) {
         this.token = token;
     }
-    
-    
-    
+
 }

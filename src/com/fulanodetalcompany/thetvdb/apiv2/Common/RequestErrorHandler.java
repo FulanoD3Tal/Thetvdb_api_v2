@@ -21,11 +21,22 @@ import retrofit2.Response;
 
 /**
  * A generic class to handle with the error of the restful api
+ *
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  * @param <T>
  */
 public class RequestErrorHandler<T> {
+
+    /**
+     * Response code for not found resource
+     */
+    public static final int NOT_FOUND_CODE = 404;
+
+    /**
+     * Response code for not authorization
+     */
+    public static final int NOT_CREDENTIALS_CODE = 401;
 
     /**
      * GSON free parser for the error message
@@ -34,32 +45,36 @@ public class RequestErrorHandler<T> {
 
     /**
      * Get the http code error
+     *
      * @param response the http request object
      * @return the code as Integer
      */
-    private int getErrorCode(Response<T> response) {
+    public int getErrorCode(Response<T> response) {
         return response.code();
     }
-    
+
     /**
      * Return an exception of the code fit in one the cases
+     *
      * @param response the http request object
      * @throws UnauthenticatedException If the request haven´t authentication
      * credentials
      */
     public void HandleError(Response<T> response) throws UnauthenticatedException {
         switch (getErrorCode(response)) {
-            case 401:
+            case NOT_CREDENTIALS_CODE:
                 throw new UnauthenticatedException(decodeErrorMesage(response));
         }
 
     }
+
     /**
      * Return the error message of the response
+     *
      * @param response the http request
      * @return the message
      */
-    private String decodeErrorMesage(Response<T> response) {
+    public String decodeErrorMesage(Response<T> response) {
         JsonObject error_message;
         error_message = parser.parse(response.errorBody().toString())
                 .getAsJsonObject();

@@ -17,11 +17,12 @@ package com.fulanodetalcompany.gson.models.Languages;
 
 /**
  * This represent a language from the api
- * 
+ *
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  */
 public class Language {
+
     /**
      * The id of the language<br>
      * gived in the next format<br>
@@ -32,7 +33,7 @@ public class Language {
     private String id;
     /**
      * The origin name of the language writen in the same language<br>
-     * 
+     *
      */
     private String name;
     /**
@@ -104,6 +105,5 @@ public class Language {
     public String toString() {
         return "Language{" + "id=" + id + ", name=" + name + ", abbreviation=" + abbreviation + ", englishName=" + englishName + '}';
     }
-    
-    
+
 }

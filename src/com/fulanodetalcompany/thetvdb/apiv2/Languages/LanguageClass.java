@@ -29,18 +29,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A class to handle the Language Selection Process
- * 
+ *
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  */
-public class LanguageClass extends RequestErrorHandler{
-    
-    Retrofit retrofit;
-    Languages languages;
+public class LanguageClass extends RequestErrorHandler {
+
+    private Retrofit retrofit;
+    private Languages languages;
     private String token;
 
     /**
-     * Constructor with the  base url for the api 
+     * Constructor with the base url for the api
+     *
      * @param base_url the url of the api
      * @param token the authentication token
      */
@@ -66,14 +67,15 @@ public class LanguageClass extends RequestErrorHandler{
     public void setToken(String token) {
         this.token = String.format("Bearer %s", token);
     }
-    
+
     /**
      * Get a list of the avaliable Languages
+     *
      * @return a list of languages
-     * @throws IOException 
+     * @throws IOException
      * @throws UnauthenticatedException If the credentials are not corrects
      */
-    public List<Language> getAvaliableLanguages() throws IOException, UnauthenticatedException{
+    public List<Language> getAvaliableLanguages() throws IOException, UnauthenticatedException {
         Response<ResultDataList<Language>> execute;
         execute = this.languages
                 .getAvaliableLanguages(token)
@@ -85,15 +87,16 @@ public class LanguageClass extends RequestErrorHandler{
         }
         return null;
     }
-    
+
     /**
      * Get the info of a single language
+     *
      * @param language_id the id of the language
      * @return Language object
-     * @throws IOException 
+     * @throws IOException
      * @throws UnauthenticatedException If the credentials are not correct
      */
-    public Language getLanguageInfo(int language_id) throws IOException, UnauthenticatedException{
+    public Language getLanguageInfo(int language_id) throws IOException, UnauthenticatedException {
         Response<ResultData<Language>> execute;
         execute = this.languages
                 .getLanguageInfo(token, language_id)
@@ -105,6 +108,5 @@ public class LanguageClass extends RequestErrorHandler{
         }
         return null;
     }
-    
-    
+
 }

@@ -22,7 +22,7 @@ import java.util.List;
  * Generic object to encapsule response in the next form<br>
  * <pre>
  * {@code
- * 
+ *
  *  {
  *      data:[
  *          object:{
@@ -31,17 +31,18 @@ import java.util.List;
  *              }
  *          ]
  * }
- * 
+ *
  * }
  * </pre>
- * 
+ *
  * where the value of data is a list of models with the info
- * 
+ *
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  * @param <T>
  */
 public class ResultDataList<T> {
+
     @SerializedName("data")
     private List<T> results;
 
@@ -58,6 +59,5 @@ public class ResultDataList<T> {
     public void setResults(List<T> results) {
         this.results = results;
     }
-    
-    
+
 }

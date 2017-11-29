@@ -13,47 +13,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fulanodetalcompany.retrofit.interfaces.Languages;
+package com.fulanodetalcompany.retrofit.interfaces.Search;
 
-import com.fulanodetalcompany.gson.models.Common.ResultData;
 import com.fulanodetalcompany.gson.models.Common.ResultDataList;
-import com.fulanodetalcompany.gson.models.Languages.Language;
+import com.fulanodetalcompany.gson.models.Series.Serie;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
- * A interface that represent the restful api methods for the Language
- *
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  */
-public interface Languages {
+public interface Search {
 
     /**
-     * Get a list of avaliable language to use as filter
+     * Get a list of series than match with the search
      *
-     * @param token to use as authentication
-     * @return List of avaliable languages
+     * @param token the authentication credentials
+     * @param name the name of the serie
+     * @return a list of series
      */
-    @GET("languages")
-    Call<ResultDataList<Language>>
-            getAvaliableLanguages(
-                    @Header("Authorization") String token
+    @GET("search/series")
+    Call<ResultDataList<Serie>>
+            searchByName(
+                    @Header("Authorization") String token,
+                    @Query("name") String name
             );
 
     /**
-     * Get a language object for the given id
+     * Get a list of series than match with the search and the language
      *
-     * @param token to use as authentication
-     * @param languageId the language id
-     * @return A language object
+     * @param token the authentication credentials
+     * @param language the language of the series
+     * @param name the name of the serie
+     * @return a list of serie
      */
-    @GET("languages/{id}")
-    Call<ResultData<Language>>
-            getLanguageInfo(
+    @GET("search/series")
+    Call<ResultDataList<Serie>>
+            searchbyName(
                     @Header("Authorization") String token,
-                    @Path("id") int languageId
+                    @Header("Accept-Language") String language,
+                    @Query("name") String name
             );
 }

@@ -24,27 +24,28 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 /**
- * Interface that represent the restful api methods
- * for the Authentication
- * 
+ * Interface that represent the restful api methods for the Authentication
+ *
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  */
 public interface Authentication {
-    
+
     /**
      * Get a token to use as authentication in the api
+     *
      * @param request a body with the element to sign in
      * @return a token string
      */
     @POST("login")
     Call<AuthenticationToken> getToken(@Body AuthenticationRequest request);
-    
+
     /**
      * Get a new token without sign in again
+     *
      * @param token the actual token
      * @return a token string
      */
     @GET("refresh_token")
     Call<AuthenticationToken> refreshToken(@Header("Authorization") String token);
-}   
+}

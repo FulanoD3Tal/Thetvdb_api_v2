@@ -16,29 +16,27 @@
 package com.fulanodetalcompany.thetvdb.apiv2.Common;
 
 /**
- * Exception when the request has no credentials
- * 
+ * Exception when the response has no elements to show
+ *
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
- * @see com.fulanodetalcompany.gson.models.Authentication.AuthenticationRequest
  */
-public class UnauthenticatedException extends Exception {
+public class NotFoundException extends Exception {
 
     /**
-     * Creates a new instance of <code>UnauthenticatedException</code> without
-     * detail message.
+     * Creates a new instance of <code>NotFoundException</code> without detail
+     * message.
      */
-    public UnauthenticatedException() {
+    public NotFoundException() {
     }
 
     /**
-     * Constructs an instance of <code>UnauthenticatedException</code> with the
+     * Constructs an instance of <code>NotFoundException</code> with the
      * specified detail message.
      *
      * @param msg the detail message.
      */
-    public UnauthenticatedException(String msg) {
+    public NotFoundException(String msg) {
         super(msg);
     }
-
 }

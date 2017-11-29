@@ -17,16 +17,16 @@ package com.fulanodetalcompany.gson.models.Authentication;
 
 /**
  * Body request use to get a token from the api<br>
- * 
- * 
+ *
+ *
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  */
 public class AuthenticationRequest {
 
     private String apikey,
-                    userkey,
-                    username;
+            userkey,
+            username;
 
     public AuthenticationRequest() {
     }
@@ -35,13 +35,14 @@ public class AuthenticationRequest {
      * To make a instance of Authentication Request<br>
      * you need three elements<br>
      * <ul>
-     *  <li>The api key as developer
-     *  <li>The userkey in the user page
-     *  <li>The username in the user page
+     * <li>The api key as developer
+     * <li>The userkey in the user page
+     * <li>The username in the user page
      * <ul>
-     * 
-     *  @see <a href="https://api.thetvdb.com/swagger">https://api.thetvdb.com/swagger</a>
-     * 
+     *
+     * @see
+     * <a href="https://api.thetvdb.com/swagger">https://api.thetvdb.com/swagger</a>
+     *
      * @param apikey
      * @param userkey
      * @param username
@@ -54,6 +55,7 @@ public class AuthenticationRequest {
 
     /**
      * Get the api key
+     *
      * @return
      */
     public String getApikey() {
@@ -62,6 +64,7 @@ public class AuthenticationRequest {
 
     /**
      * set the api key
+     *
      * @param apikey
      */
     public void setApikey(String apikey) {
@@ -70,6 +73,7 @@ public class AuthenticationRequest {
 
     /**
      * get the user key
+     *
      * @return
      */
     public String getUserkey() {
@@ -78,6 +82,7 @@ public class AuthenticationRequest {
 
     /**
      * set the user key
+     *
      * @param userkey
      */
     public void setUserkey(String userkey) {
@@ -86,6 +91,7 @@ public class AuthenticationRequest {
 
     /**
      * get the user name
+     *
      * @return
      */
     public String getUsername() {
@@ -94,6 +100,7 @@ public class AuthenticationRequest {
 
     /**
      * set the user name
+     *
      * @param username
      */
     public void setUsername(String username) {
