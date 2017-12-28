@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fulanodetalcompany.thetvdb.apiv2.Search;
+package com.fulanodetalcompany.thetvdb.apiv2.Serie;
 
+import com.fulanodetalcompany.gson.models.Common.ResultData;
 import com.fulanodetalcompany.gson.models.Common.ResultDataList;
+import com.fulanodetalcompany.gson.models.Series.Actor;
 import com.fulanodetalcompany.gson.models.Series.Serie;
-import com.fulanodetalcompany.retrofit.interfaces.Search.Search;
+import com.fulanodetalcompany.retrofit.interfaces.Series.Series;
 import com.fulanodetalcompany.thetvdb.apiv2.Common.NotFoundException;
 import com.fulanodetalcompany.thetvdb.apiv2.Common.RequestErrorHandler;
 import com.fulanodetalcompany.thetvdb.apiv2.Common.UnauthenticatedException;
@@ -36,7 +38,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -45,19 +46,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @version 0.0.1
  * @author Roberto Alonso De la Garza Mendoza
  */
-public class SearchClass extends RequestErrorHandler {
+public class SerieClass extends RequestErrorHandler {
 
     private Retrofit retrofit;
-    private Search search;
+    private Series serie;
     private String token;
 
     /**
-     * Constructor with the base url for the api
      *
      * @param base_url
      * @param token
      */
-    public SearchClass(String base_url, String token) {
+    public SerieClass(String base_url, String token) {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyy-MM-dd")
                 .registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
@@ -68,21 +68,19 @@ public class SearchClass extends RequestErrorHandler {
                         try {
                             return date_string.isEmpty() ? null : formater.parse(date_string);
                         } catch (ParseException ex) {
-                            Logger.getLogger(SearchClass.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(SerieClass.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         return null;
                     }
                 })
                 .serializeNulls()
                 .create();
-
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(base_url)
                 .addConverterFactory(
                         GsonConverterFactory.create(gson)
-                )
-                .build();
-        this.search = retrofit.create(Search.class);
+                ).build();
+        this.serie = retrofit.create(Series.class);
         this.token = String.format("Bearer %s", token);
     }
 
@@ -97,65 +95,81 @@ public class SearchClass extends RequestErrorHandler {
      * @param token the token to set
      */
     public void setToken(String token) {
-        this.token = String.format("Bearer %s", token);
+        this.token = token;
     }
 
     /**
-     * Search series by name, if there are series that match with the name
-     * gived, the method will return a <code>List</code> of <code>Search</code>
-     * object or <code>null</code> if there where no match
      *
-     * @param name the name to search
-     * @return List of series
-     * @throws IOException
-     * @throws UnauthenticatedException
-     * @throws NotFoundException
-     */
-    public List<Serie> searchByName(
-            String name
-    ) throws 
-            IOException,
-            UnauthenticatedException,
-            NotFoundException {
-        return this.searchByName(null, name);
-    }
-
-    /**
-     * Search series by name, if there are series that match with the name
-     * gived, the method will return a <code>List</code> of <code>Search</code>
-     * object or <code>null</code> if there where no match
-     *
-     * @param language
-     * @param name
+     * @param id
      * @return
      * @throws IOException
-     * @throws UnauthenticatedException
      * @throws NotFoundException
+     * @throws UnauthenticatedException
      */
-    public List<Serie> searchByName(
-            String language,
-            String name
-    ) throws 
+    public Serie getSerieInfo(
+            int id
+    ) throws
             IOException,
-            UnauthenticatedException,
-            NotFoundException {
-        Response<ResultDataList<Serie>> execute = null;
+            NotFoundException,
+            UnauthenticatedException {
+        return this.getSerieInfo(null, id);
+    }
+
+    /**
+     *
+     * @param language
+     * @param serieId
+     * @return
+     * @throws IOException
+     * @throws NotFoundException
+     * @throws UnauthenticatedException
+     */
+    public Serie getSerieInfo(
+            String language,
+            int serieId
+    ) throws
+            IOException,
+            NotFoundException,
+            UnauthenticatedException {
+        Response<ResultData<Serie>> execute = null;
         if (language == null) {
-            execute = this.search
-                    .searchByName(
+            execute = this.serie
+                    .getSerieInfo(
                             token,
-                            name
+                            serieId
                     )
                     .execute();
         } else {
-            execute = this.search
-                    .searchbyName(
+            execute = this.serie
+                    .getSerieInfo(
                             token,
                             language,
-                            name
+                            serieId
                     )
                     .execute();
+
         }
+
+        if (getErrorCode(execute) == NOT_FOUND_CODE) {
+            throw new NotFoundException(execute.message());
+        }
+
+        if (execute.isSuccessful()) {
+            return execute.body().getResult();
+        } else {
+            HandleError(execute);
+            return null;
+        }
+    }
+
+    public List<Actor> getActorsInfo(
+            int serieid
+    ) throws
+            IOException,
+            NotFoundException,
+            UnauthenticatedException {
+        Response<ResultDataList<Actor>> execute
+                = this.serie.getActorsInfo(token, serieid).execute();
 
         if (getErrorCode(execute) == NOT_FOUND_CODE) {
             throw new NotFoundException(execute.message());
@@ -168,5 +182,4 @@ public class SearchClass extends RequestErrorHandler {
             return null;
         }
     }
-
 }

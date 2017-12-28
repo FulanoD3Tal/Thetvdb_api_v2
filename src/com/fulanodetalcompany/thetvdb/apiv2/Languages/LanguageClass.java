@@ -84,8 +84,9 @@ public class LanguageClass extends RequestErrorHandler {
             return execute.body().getResults();
         } else {
             HandleError(execute);
+            return null;
         }
-        return null;
+        
     }
 
     /**
@@ -105,8 +106,8 @@ public class LanguageClass extends RequestErrorHandler {
             return execute.body().getResult();
         } else {
             HandleError(execute);
+            return null;
         }
-        return null;
     }
 
 }

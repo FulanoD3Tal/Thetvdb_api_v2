@@ -85,8 +85,8 @@ public class AuthenticationClass extends RequestErrorHandler<AuthenticationToken
             return execute.body().getToken();
         } else {
             HandleError(execute);
+            return null;
         }
-        return null;
     }
 
     /**
@@ -120,8 +120,8 @@ public class AuthenticationClass extends RequestErrorHandler<AuthenticationToken
             return execute.body().getToken();
         } else {
             HandleError(execute);
+            return null;
         }
-        return null;
     }
 
 }
